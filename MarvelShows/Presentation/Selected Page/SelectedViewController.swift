@@ -4,8 +4,8 @@ class SelectedViewController: UIViewController {
 
     var seriesId: Int?
     let fetchPhoto = FetchPhoto()
-    let defaults = UserDefaults.standard
     var series: Series? = nil
+    let defaults = UserDefaults.standard
     var selectedSeries: SelectedResponce?
     let selectedApiService = DetailsApiService()
     let activityIndicatorView = UIActivityIndicatorView(style: .large)
@@ -19,7 +19,7 @@ class SelectedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        initializeView()
         activityIndicatorView.center = view.center
         view.addSubview(activityIndicatorView)
         
@@ -41,6 +41,13 @@ class SelectedViewController: UIViewController {
             self?.saveSelectedData(cacheKey: cacheKey)
             self?.updateUI()
         }
+    }
+    func initializeView() {
+        selectedNameLbl.text = ""
+        selectedStartDateLbl.text = ""
+        selectedEndDateLbl.text = ""
+        selectedRatingLbl.text = ""
+        selectedCreatorLbl.text = ""
     }
     func saveSelectedData(cacheKey: String) {
         guard let data = try? JSONEncoder().encode(selectedSeries) else { return }

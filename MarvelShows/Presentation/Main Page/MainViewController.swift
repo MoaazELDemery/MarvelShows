@@ -39,13 +39,20 @@ class MainViewController: UIViewController {
         isLoading = true
         activityIndicatorView.isHidden = false
         activityIndicatorView.startAnimating()
-        viewModel.fetchShows()
+        currentPage = 0 
+        viewModel.fetchShows(page: currentPage)
     }
     func loadMoreData() {
         guard !isLoading else { return }
         isLoading = true
-        currentPage += 10
-        viewModel.fetchMoreShows()
+
+        guard let series = series, series.data.results.count <= series.data.count else {
+            isLoading = false
+            return
+        }
+
+        currentPage += 1
+        viewModel.fetchShows(page: currentPage)
     }
 }
 extension MainViewController: MainViewControllerProtocol {
@@ -75,11 +82,12 @@ extension MainViewController: MainViewControllerProtocol {
 }
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if isSearching {
-            return filteredData.count
-        } else {
-            return series?.data.results.count ?? 0
-        }
+        print("numberOfItemsInSection called")
+            if isSearching {
+                return filteredData.count
+            } else {
+                return series?.data.results.count ?? 0
+            }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "showCell", for: indexPath) as! ShowCollectionViewCell

@@ -160,8 +160,8 @@
 		D3E75C9F2A61CCB3003BA58E /* Main Page */ = {
 			isa = PBXGroup;
 			children = (
-				D3C5FCC02A5D73BB00DF5A4D /* MainViewController.swift */,
 				D3C5FCC22A5D73BB00DF5A4D /* Main.storyboard */,
+				D3C5FCC02A5D73BB00DF5A4D /* MainViewController.swift */,
 			);
 			path = "Main Page";
 			sourceTree = "<group>";
@@ -169,8 +169,8 @@
 		D3E75CA02A61CCCF003BA58E /* Selected Page */ = {
 			isa = PBXGroup;
 			children = (
-				D3E75C982A604D71003BA58E /* SelectedViewController.swift */,
 				D3E75C9D2A61CC76003BA58E /* Selected.storyboard */,
+				D3E75C982A604D71003BA58E /* SelectedViewController.swift */,
 			);
 			path = "Selected Page";
 			sourceTree = "<group>";

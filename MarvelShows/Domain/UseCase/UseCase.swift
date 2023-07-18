@@ -1,7 +1,7 @@
 import Foundation
 
 protocol MarvelShowsUseCase {
-    func fetchShows(completion: @escaping (Result<SeriesResponse, Error>) -> Void)
+    func fetchShows(page: Int, completion: @escaping (Result<SeriesResponse, Error>) -> Void)
     func fetchMoreShows(completion: @escaping (Result<SeriesResponse, Error>) -> Void)
     func filterShows(with searchText: String) -> [Series]
 }
@@ -17,20 +17,21 @@ class MarvelShowsUseCaseImpl: MarvelShowsUseCase {
     }
     
     
-    func fetchShows(completion: @escaping (Result<SeriesResponse, Error>) -> Void) {
-        marvelApiService.fetchData(page: currentPage) { [weak self] result in
-            guard let self = self else { return }
-            if let result = result {
-                self.series = result
-                self.filteredData = result.data.results
-                completion(.success(result))
-            } else {
-                completion(.failure(MarvelShowsError.failedToFetchData))
+    func fetchShows(page: Int, completion: @escaping (Result<SeriesResponse, Error>) -> Void) {
+            currentPage = page
+            marvelApiService.fetchData(page: currentPage) { [weak self] result in
+                guard let self = self else { return }
+                if let result = result {
+                    self.series = result
+                    self.filteredData = result.data.results
+                    completion(.success(result))
+                } else {
+                    completion(.failure(MarvelShowsError.failedToFetchData))
+                }
             }
         }
-    }
     func fetchMoreShows(completion: @escaping (Result<SeriesResponse, Error>) -> Void) {
-        currentPage += 10
+        currentPage += 1
         marvelApiService.fetchData(page: currentPage) { [weak self] result in
             guard let self = self else { return }
             if let result = result {
