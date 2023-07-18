@@ -1,22 +1,28 @@
 import UIKit
 
 class MainViewController: UIViewController {
-
+    
     var currentPage = 0
     var isLoading = false
     var isSearching = false
     var series: SeriesResponse?
     let fetchPhoto = FetchPhoto()
     var filteredData: [Series] = []
-    let apiService = MarvelApiService()
     let activityIndicatorView = UIActivityIndicatorView(style: .large)
-
+    
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var collectionView: UICollectionView!
     
+    private var viewModel: MainViewModel = .init(marvelShowsUseCase: MarvelShowsUseCaseImpl(marvelApiService: MarvelApiService()))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        viewModel.viewDelegateProtocol = self
+        
+        setupView()
+        loadInitialData()
+    }
+    func setupView() {
         let showNib = UINib(nibName: "ShowCollectionViewCell", bundle: nil)
         collectionView.register(showNib, forCellWithReuseIdentifier: "showCell")
         
@@ -24,8 +30,6 @@ class MainViewController: UIViewController {
         
         activityIndicatorView.center = collectionView.center
         collectionView.addSubview(activityIndicatorView)
-        
-        loadInitialData()
         
         searchBar.delegate = self
         collectionView.delegate = self
@@ -35,33 +39,39 @@ class MainViewController: UIViewController {
         isLoading = true
         activityIndicatorView.isHidden = false
         activityIndicatorView.startAnimating()
-        
-        apiService.fetchData(page: currentPage) { [weak self] result in
-            guard let result = result else { return }
-            print(result.data.results.count)
-            self?.series = result
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-                self?.activityIndicatorView.stopAnimating()
-                self?.activityIndicatorView.isHidden = true
-                self?.isLoading = false
-            }
-        }
+        viewModel.fetchShows()
     }
     func loadMoreData() {
-            guard !isLoading else { return }
-            isLoading = true
-            currentPage += 10
-            apiService.fetchData(page: currentPage) { [weak self] result in
-                guard let result = result else { return }
-                let newResults = result.data.results
-                self?.series?.data.results.append(contentsOf: newResults)
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
-                    self?.isLoading = false
-                }
-            }
+        guard !isLoading else { return }
+        isLoading = true
+        currentPage += 10
+        viewModel.fetchMoreShows()
+    }
+}
+extension MainViewController: MainViewControllerProtocol {
+    func displayShows(data: SeriesResponse) {
+        self.series = data
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.reloadData()
+            self?.activityIndicatorView.stopAnimating()
+            self?.activityIndicatorView.isHidden = true
+            self?.isLoading = false
         }
+    }
+    func displayMoreShows(data: SeriesResponse) {
+        let newResults = data.data.results
+        self.series?.data.results.append(contentsOf: newResults)
+        DispatchQueue.main.async { [weak self] in
+            self?.collectionView.reloadData()
+            self?.isLoading = false
+        }
+    }
+    func displayError(error: String) {
+        let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            let window = UIApplication.shared.keyWindow
+            window?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
 }
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -74,9 +84,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "showCell", for: indexPath) as! ShowCollectionViewCell
         let lastItem = isSearching ? filteredData.count-1 : series!.data.results.count-1
-                if indexPath.row == lastItem && !isLoading {
-                    loadMoreData()
-                }
+        if indexPath.row == lastItem && !isLoading {
+            loadMoreData()
+        }
         cell.showImgView.image = nil
         cell.showNameLbl.text = ""
         cell.showDateLbl.text = ""
@@ -120,24 +130,26 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         collectionView!.collectionViewLayout = layout
     }
 }
+
+
 extension MainViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            guard let series = series else { return }
-            if searchText.isEmpty {
-                isSearching = false
-                filteredData = series.data.results
-            } else {
-                isSearching = true
-                filteredData = series.data.results.filter({ (result) -> Bool in
-                    return result.title.lowercased().contains(searchText.lowercased())
-                })
-            }
-            collectionView.reloadData()
-    }
-        func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-            searchBar.text = nil
+        guard let series = series else { return }
+        if searchText.isEmpty {
             isSearching = false
-            filteredData = series?.data.results ?? []
-            collectionView.reloadData()
+            filteredData = series.data.results
+        } else {
+            isSearching = true
+            filteredData = series.data.results.filter({ (result) -> Bool in
+                return result.title.lowercased().contains(searchText.lowercased())
+            })
         }
+        collectionView.reloadData()
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+        isSearching = false
+        filteredData = series?.data.results ?? []
+        collectionView.reloadData()
+    }
 }

@@ -19,7 +19,7 @@
 		D3E75C932A5EF6D1003BA58E /* Hash-TS.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E75C922A5EF6D1003BA58E /* Hash-TS.swift */; };
 		D3E75C952A5EFA5A003BA58E /* MarvelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E75C942A5EFA5A003BA58E /* MarvelModel.swift */; };
 		D3E75C992A604D71003BA58E /* SelectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E75C982A604D71003BA58E /* SelectedViewController.swift */; };
-		D3E75C9C2A61BEBA003BA58E /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E75C9B2A61BEBA003BA58E /* ViewModel.swift */; };
+		D3E75C9C2A61BEBA003BA58E /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E75C9B2A61BEBA003BA58E /* MainViewModel.swift */; };
 		D3E75C9E2A61CC76003BA58E /* Selected.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3E75C9D2A61CC76003BA58E /* Selected.storyboard */; };
 		D3E75CA22A6302B0003BA58E /* FetchPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E75CA12A6302B0003BA58E /* FetchPhoto.swift */; };
 		D3E9E1822A64A89000331B1E /* DetailsApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E9E1812A64A89000331B1E /* DetailsApiService.swift */; };
@@ -42,7 +42,7 @@
 		D3E75C922A5EF6D1003BA58E /* Hash-TS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hash-TS.swift"; sourceTree = "<group>"; };
 		D3E75C942A5EFA5A003BA58E /* MarvelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelModel.swift; sourceTree = "<group>"; };
 		D3E75C982A604D71003BA58E /* SelectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedViewController.swift; sourceTree = "<group>"; };
-		D3E75C9B2A61BEBA003BA58E /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		D3E75C9B2A61BEBA003BA58E /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		D3E75C9D2A61CC76003BA58E /* Selected.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Selected.storyboard; sourceTree = "<group>"; };
 		D3E75CA12A6302B0003BA58E /* FetchPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPhoto.swift; sourceTree = "<group>"; };
 		D3E9E1812A64A89000331B1E /* DetailsApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsApiService.swift; sourceTree = "<group>"; };
@@ -85,13 +85,6 @@
 				D3E9E18D2A667AC700331B1E /* UseCase.swift */,
 			);
 			path = UseCase;
-			sourceTree = "<group>";
-		};
-		D362B36D2A5E0CF1007F24F9 /* Repository */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Repository;
 			sourceTree = "<group>";
 		};
 		D362B36E2A5E0D01007F24F9 /* Data */ = {
@@ -143,11 +136,10 @@
 		D3C5FCBB2A5D73BB00DF5A4D /* MarvelShows */ = {
 			isa = PBXGroup;
 			children = (
-				D3E75C9A2A61991E003BA58E /* ViewModel */,
-				D362B36D2A5E0CF1007F24F9 /* Repository */,
 				D362B36E2A5E0D01007F24F9 /* Data */,
 				D362B36F2A5E0D0B007F24F9 /* Domain */,
 				D362B3702A5E0D15007F24F9 /* Presentation */,
+				D3E75C9A2A61991E003BA58E /* ViewModel */,
 				D3C5FCBC2A5D73BB00DF5A4D /* AppDelegate.swift */,
 				D3C5FCBE2A5D73BB00DF5A4D /* SceneDelegate.swift */,
 				D3C5FCC52A5D73BD00DF5A4D /* Assets.xcassets */,
@@ -160,7 +152,7 @@
 		D3E75C9A2A61991E003BA58E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				D3E75C9B2A61BEBA003BA58E /* ViewModel.swift */,
+				D3E75C9B2A61BEBA003BA58E /* MainViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -259,7 +251,7 @@
 				D3E9E1842A65834A00331B1E /* SelectedModel.swift in Sources */,
 				D3E9E1822A64A89000331B1E /* DetailsApiService.swift in Sources */,
 				D3E75C932A5EF6D1003BA58E /* Hash-TS.swift in Sources */,
-				D3E75C9C2A61BEBA003BA58E /* ViewModel.swift in Sources */,
+				D3E75C9C2A61BEBA003BA58E /* MainViewModel.swift in Sources */,
 				D3C5FCC12A5D73BB00DF5A4D /* MainViewController.swift in Sources */,
 				D3C5FCBD2A5D73BB00DF5A4D /* AppDelegate.swift in Sources */,
 				D3E9E18E2A667AC700331B1E /* UseCase.swift in Sources */,

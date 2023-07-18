@@ -5,6 +5,7 @@ protocol MarvelShowsUseCase {
     func fetchMoreShows(completion: @escaping (Result<SeriesResponse, Error>) -> Void)
     func filterShows(with searchText: String) -> [Series]
 }
+
 class MarvelShowsUseCaseImpl: MarvelShowsUseCase {
     private let marvelApiService: MarvelApiService
     private var currentPage = 0
@@ -14,6 +15,8 @@ class MarvelShowsUseCaseImpl: MarvelShowsUseCase {
     init(marvelApiService: MarvelApiService) {
         self.marvelApiService = marvelApiService
     }
+    
+    
     func fetchShows(completion: @escaping (Result<SeriesResponse, Error>) -> Void) {
         marvelApiService.fetchData(page: currentPage) { [weak self] result in
             guard let self = self else { return }
