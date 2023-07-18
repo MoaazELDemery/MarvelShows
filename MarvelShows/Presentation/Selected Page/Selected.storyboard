@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Selected View Controller-->
+        <scene sceneID="8a4-iq-3OU">
+            <objects>
+                <viewController storyboardIdentifier="selectedVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gTp-Vg-OQu" customClass="SelectedViewController" customModule="MarvelShows" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KSb-e7-W4D">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BYx-f9-tTf">
+                                <rect key="frame" x="0.0" y="44" width="414" height="220"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="220" id="X6O-aS-08y"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="VOT-ee-lww">
+                                <rect key="frame" x="5" y="274" width="404" height="221.66666666666663"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Odr-mm-hTm">
+                                        <rect key="frame" x="0.0" y="0.0" width="404" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Creator" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CvL-0e-hDa">
+                                        <rect key="frame" x="0.0" y="50.333333333333314" width="404" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Date" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4s3-Vs-uUY">
+                                        <rect key="frame" x="0.0" y="100.66666666666669" width="404" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Date" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ntK-WO-Gi1">
+                                        <rect key="frame" x="0.0" y="151" width="404" height="20.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U8S-Xe-05K">
+                                        <rect key="frame" x="0.0" y="201.33333333333331" width="404" height="20.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Dnq-Le-9cU"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="BYx-f9-tTf" firstAttribute="top" secondItem="Dnq-Le-9cU" secondAttribute="top" id="0GY-vY-KiP"/>
+                            <constraint firstItem="VOT-ee-lww" firstAttribute="leading" secondItem="Dnq-Le-9cU" secondAttribute="leading" constant="5" id="KaE-s4-Lrg"/>
+                            <constraint firstItem="VOT-ee-lww" firstAttribute="centerX" secondItem="KSb-e7-W4D" secondAttribute="centerX" id="Laj-hY-YwX"/>
+                            <constraint firstItem="VOT-ee-lww" firstAttribute="top" secondItem="BYx-f9-tTf" secondAttribute="bottom" constant="10" id="RmE-kG-b1a"/>
+                            <constraint firstItem="Dnq-Le-9cU" firstAttribute="trailing" secondItem="VOT-ee-lww" secondAttribute="trailing" constant="5" id="dMb-Ix-l7Z"/>
+                            <constraint firstItem="BYx-f9-tTf" firstAttribute="leading" secondItem="Dnq-Le-9cU" secondAttribute="leading" id="pwc-L0-xzv"/>
+                            <constraint firstItem="BYx-f9-tTf" firstAttribute="trailing" secondItem="Dnq-Le-9cU" secondAttribute="trailing" id="s87-dA-cRa"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="selectedCreatorLbl" destination="CvL-0e-hDa" id="TEm-cT-yHI"/>
+                        <outlet property="selectedEndDateLbl" destination="ntK-WO-Gi1" id="k3A-Hq-qzj"/>
+                        <outlet property="selectedImgView" destination="BYx-f9-tTf" id="I0j-pj-aU1"/>
+                        <outlet property="selectedNameLbl" destination="Odr-mm-hTm" id="k4v-ju-CpX"/>
+                        <outlet property="selectedRatingLbl" destination="U8S-Xe-05K" id="fhj-5E-fRe"/>
+                        <outlet property="selectedStartDateLbl" destination="4s3-Vs-uUY" id="vkj-0v-YDd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iZV-wc-cVa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1024.6376811594205" y="-27.455357142857142"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
