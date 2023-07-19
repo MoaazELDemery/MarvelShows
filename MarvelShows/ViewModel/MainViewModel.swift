@@ -29,7 +29,7 @@ class MainViewModel {
             }
         })
     }
-    func fetchMoreShows() {
+    func fetchMoreShows(page: Int) {
         marvelShowsUseCase.fetchMoreShows(completion: { [weak self] result in
             switch result {
             case .success(let response):

@@ -31,7 +31,7 @@ class MarvelShowsUseCaseImpl: MarvelShowsUseCase {
             }
         }
     func fetchMoreShows(completion: @escaping (Result<SeriesResponse, Error>) -> Void) {
-        currentPage += 1
+        currentPage += 10
         marvelApiService.fetchData(page: currentPage) { [weak self] result in
             guard let self = self else { return }
             if let result = result {

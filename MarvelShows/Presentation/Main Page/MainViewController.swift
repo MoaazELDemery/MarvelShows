@@ -8,6 +8,7 @@ class MainViewController: UIViewController {
     var series: SeriesResponse?
     let fetchPhoto = FetchPhoto()
     var filteredData: [Series] = []
+    let apiService = MarvelApiService()
     let activityIndicatorView = UIActivityIndicatorView(style: .large)
     
     @IBOutlet var searchBar: UISearchBar!
@@ -18,19 +19,15 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.viewDelegateProtocol = self
-        
         setupView()
         loadInitialData()
     }
     func setupView() {
         let showNib = UINib(nibName: "ShowCollectionViewCell", bundle: nil)
         collectionView.register(showNib, forCellWithReuseIdentifier: "showCell")
-        
         collectionViewLayout()
-        
         activityIndicatorView.center = collectionView.center
         collectionView.addSubview(activityIndicatorView)
-        
         searchBar.delegate = self
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -43,14 +40,28 @@ class MainViewController: UIViewController {
         viewModel.fetchShows(page: currentPage)
     }
     func loadMoreData() {
+        if series!.data.results.count <= series!.data.count {
+            guard !isLoading else { return }
+            isLoading = true
+            currentPage += 10
+            apiService.fetchData(page: currentPage) { [weak self] result in
+                guard let result = result else { return }
+                let newResults = result.data.results
+                self?.series?.data.results.append(contentsOf: newResults)
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                    self?.isLoading = false
+                }
+            }
+        }
+    }
+    func lloadMoreData() {
         guard !isLoading else { return }
         isLoading = true
-
         guard let series = series, series.data.results.count <= series.data.count else {
             isLoading = false
             return
         }
-
         currentPage += 1
         viewModel.fetchShows(page: currentPage)
     }
@@ -100,8 +111,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.showDateLbl.text = ""
         cell.showRatingLbl.text = ""
         let result = series?.data.results[indexPath.row]
-        let path = result?.thumbnail.path ?? ""
-        let exten = result?.thumbnail.extension ?? ""
+        let show = isSearching ? filteredData[indexPath.row] : result
+        let path = show?.thumbnail.path ?? ""
+        let exten = show?.thumbnail.extension ?? ""
         let imageURL = URL(string: "\(path).\(exten)")!
         fetchPhoto.loadImage(fromURL: imageURL) { (photo) in
             guard let image = photo else {
@@ -112,9 +124,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 cell.showImgView.image = image
             }
         }
-        let show = isSearching ? filteredData[indexPath.row] : result
         cell.showNameLbl.text = show?.title
-        if let startYear = result?.startYear {
+        if let startYear = show?.startYear {
             cell.showDateLbl.text = "Start Year: \(String(startYear))"
         }
         cell.showRatingLbl.text = "Rating: \(show?.rating ?? "Not Rated")"
@@ -126,7 +137,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Selected", bundle: nil)
         let selectedVC = storyboard.instantiateViewController(withIdentifier: "selectedVC") as! SelectedViewController
-        selectedVC.seriesId = series?.data.results[indexPath.row].id
+        let selectedShow: Series
+        if isSearching {
+            selectedShow = filteredData[indexPath.row]
+        } else {
+            selectedShow = series!.data.results[indexPath.row]
+        }
+        selectedVC.seriesId = selectedShow.id
         navigationController?.present(selectedVC, animated: true)
     }
     func collectionViewLayout() {
@@ -138,8 +155,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         collectionView!.collectionViewLayout = layout
     }
 }
-
-
 extension MainViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let series = series else { return }
