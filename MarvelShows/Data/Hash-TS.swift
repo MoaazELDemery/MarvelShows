@@ -18,7 +18,7 @@ class HashTS {
             _ = CC_MD5($0.baseAddress, CC_LONG(data.count), &digest)
         }
         let hash = digest.map { String(format: "%02hhx", $0) }.joined()
-        let urlString = "https://gateway.marvel.com/v1/public/series?ts=\(timestamp)&apikey=\(publicKey)&hash=\(hash)"
+        let urlString = "https://gateway.marvel.com/v1/public/series?ts=\(timestamp)&apikey=\(publicKey)&hash=\(hash)&limit=10"
         let detailUrlString = "https://gateway.marvel.com/v1/public/series/\(seriesId ?? 0)?ts=\(timestamp)&apikey=\(publicKey)&hash=\(hash)"
         apiUrl = urlString
         selectedApiUrl = detailUrlString

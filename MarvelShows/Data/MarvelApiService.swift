@@ -3,14 +3,14 @@ import UIKit
 
 class MarvelApiService {
     let hash = HashTS()
-    let itemsPerPage = 10
-
-    func fetchData(page: Int, completion: @escaping (SeriesResponse?) -> ()) {
+    var offset = 0
+    
+    func fetchData(offset: Int, completion: @escaping (SeriesResponse?) -> ()) {
         
         hash.generateHash(timestamp: hash.timestamp, privateKey: hash.privateKey, publicKey: hash.publicKey)
 
-        let offset = page * itemsPerPage
-        let urlString = "\(hash.apiUrl)&offset=\(offset)&limit=\(itemsPerPage)"
+        let urlString = "\(hash.apiUrl)&offset=\(offset)"
+        print("urlString = \(urlString)")
         guard let sourcesURL = URL(string: urlString) else {
             completion(nil)
             return

@@ -19,8 +19,8 @@ class MainViewModel {
     init(marvelShowsUseCase: MarvelShowsUseCase) {
         self.marvelShowsUseCase = marvelShowsUseCase
     }
-    func fetchShows(page: Int) {
-        marvelShowsUseCase.fetchShows(page: page, completion: { [weak self] result in
+    func fetchShows() {
+        marvelShowsUseCase.fetchShows(completion: { [weak self] result in
             switch result {
             case .success(let response):
                 self?.viewDelegateProtocol?.displayShows(data: response)
@@ -29,7 +29,7 @@ class MainViewModel {
             }
         })
     }
-    func fetchMoreShows(page: Int) {
+    func fetchMoreShows() {
         marvelShowsUseCase.fetchMoreShows(completion: { [weak self] result in
             switch result {
             case .success(let response):
